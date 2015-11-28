@@ -29,7 +29,7 @@
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#defaultNavbar1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
-     
+      
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="defaultNavbar1"> </div>
     <!-- /.navbar-collapse --> 
@@ -45,58 +45,17 @@
   </div>
   <hr>
 </div>
+<h2 class="h3">はてなアカウントでログイン</h2>
 <div class="container">
   <div>
-    <form name="entry">
-    <div>
-    <span class="label label-primary">タイトル</span>
-    <input type="text" class="form-control" placeholder="タイトル" name="title">
-    </div>
-    <div><span class="label label-primary">本文</span>
-<textarea type="text" class="form-control" rows="20" name="content">
-      </textarea></div>
-<div><span class="label label-primary">投稿日時指定（任意）</span>
-  <div class="row">
-<!-- /.col-lg-6 -->
-    
-    <!-- /.col-lg-6 -->
-  </div>
-  <div class="row">
-    <div class="col-lg-6">
-      <div class="input-group"><span class="input-group-addon">
-        <input type="checkbox" name="date_boo" onClick="date_able">
-        </span>
-        <input type="datetime-local" class="form-control" value="YYYY-MM-DDThh:mm:ss" name="update">
-      </div>
-      <!-- /input-group -->
-    </div>
-    <!-- /.col-lg-6 -->
-  </div>
+    <form name="login">
+    <span class="label label-primary">メールアドレス</span>
+    <input type="email" class="form-control">
+    <span class="label label-primary">パスワード</span>
+    <input type="password" class="form-control">
+    <button type="button" class="btn btn-success">ログイン</button>
+    </form>
 
-</div>
-
-    <div><span class="label label-primary" name="category">カテゴリ</span>
-      <input type="text" class="form-control" name="category">
-      <div class="row">
-        <div class="col-lg-6">
-          <div class="input-group"><span class="input-group-addon">
-            <input type="checkbox" name="draft" value="yes">
-            </span>
-            <input type="text" class="form-control" value="下書きとして保存する">
-          </div>
-          <!-- /input-group -->
-        </div>
-        <!-- /.col-lg-6 -->
-        
-        <!-- /.col-lg-6 -->
-      </div>
-    </div>
-    
-</form>
-    
-   <div>
-   	 <button type="button" class="btn btn-success" onClick="submit()">送信</button>
-   </div>
 </div>
 <hr>
 <hr>
