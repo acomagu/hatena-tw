@@ -19097,41 +19097,17 @@ var ButtonToAuth = (function (_React$Component) {
   function ButtonToAuth(props) {
     _classCallCheck(this, ButtonToAuth);
 
-    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(ButtonToAuth).call(this, props));
-
-    _this2.twitterService = null;
-    return _this2;
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(ButtonToAuth).call(this, props));
   }
 
   _createClass(ButtonToAuth, [{
     key: 'handleClick',
     value: function handleClick() {
-      this.twitterService = new TwitterService();
-      this.twitterService.getMyTweetsInToday().then(function (tweets) {
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
-
-        try {
-          for (var _iterator = tweets[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var tweet = _step.value;
-            console.log(tweet.text);
-          }
-        } catch (err) {
-          _didIteratorError = true;
-          _iteratorError = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion && _iterator.return) {
-              _iterator.return();
-            }
-          } finally {
-            if (_didIteratorError) {
-              throw _iteratorError;
-            }
-          }
-        }
-      });
+      this.props.onPushed();
+      // this.props.onAuthed(new TwitterService());
+      // twitterService.getMyTweetsInToday().then((tweets) => {
+      //   for(let tweet of tweets) console.log(tweet.text);
+      // });
     }
   }, {
     key: 'render',
@@ -19147,6 +19123,88 @@ var ButtonToAuth = (function (_React$Component) {
   return ButtonToAuth;
 })(_react2.default.Component);
 
+var TweetList = (function (_React$Component2) {
+  _inherits(TweetList, _React$Component2);
+
+  function TweetList(props) {
+    _classCallCheck(this, TweetList);
+
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(TweetList).call(this, props));
+  }
+
+  _createClass(TweetList, [{
+    key: 'render',
+    value: function render() {
+      var elems = this.props.myTweets.map(function (tweet) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'input-group', keys: tweet },
+          _react2.default.createElement(
+            'span',
+            { className: 'input-group-addon' },
+            _react2.default.createElement('input', { type: 'checkbox' })
+          ),
+          _react2.default.createElement(
+            'textarea',
+            { className: 'form-control', rows: '4' },
+            tweet.text
+          )
+        );
+      });
+      return _react2.default.createElement(
+        'div',
+        null,
+        elems
+      );
+    }
+  }]);
+
+  return TweetList;
+})(_react2.default.Component);
+
+var Page = (function (_React$Component3) {
+  _inherits(Page, _React$Component3);
+
+  function Page(props) {
+    _classCallCheck(this, Page);
+
+    var _this4 = _possibleConstructorReturn(this, Object.getPrototypeOf(Page).call(this, props));
+
+    _this4.state = {
+      twitterService: null,
+      myTweets: []
+    };
+    return _this4;
+  }
+
+  _createClass(Page, [{
+    key: 'handlePush',
+    value: function handlePush() {
+      var _this5 = this;
+
+      var twitterService = new TwitterService();
+      twitterService.getMyTweetsInToday().then(function (tweets) {
+        _this5.setState({
+          twitterService: twitterService,
+          myTweets: tweets
+        });
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { className: 'container' },
+        _react2.default.createElement(ButtonToAuth, { onPushed: this.handlePush.bind(this) }),
+        _react2.default.createElement(TweetList, { myTweets: this.state.myTweets })
+      );
+    }
+  }]);
+
+  return Page;
+})(_react2.default.Component);
+
 var documentReadyPromise = new Promise(function (resolve, reject) {
   if (document.readyState == 'complete') resolve();
   document.addEventListener('DOMContentLoaded', function () {
@@ -19155,6 +19213,6 @@ var documentReadyPromise = new Promise(function (resolve, reject) {
 });
 
 documentReadyPromise.then(function () {
-  _reactDom2.default.render(_react2.default.createElement(ButtonToAuth, null), document.querySelector('.page-container'));
+  _reactDom2.default.render(_react2.default.createElement(Page, null), document.querySelector('.react-root'));
 });
 },{"oauthio-web":29,"react":159,"react-dom":30}]},{},[160])

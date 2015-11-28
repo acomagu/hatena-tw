@@ -97,33 +97,38 @@ class TweetList extends React.Component {
     super(props);
   }
   render() {
-    return this.props.myTweets.map((tweet) => (
-      <div class="input-group">
-        <span class="input-group-addon"><input type="checkbox"></span>
-        <textarea class="form-control" rows="4">{tweet.text}</textarea>
+    let elems = this.props.myTweets.map((tweet) => (
+      <div className="input-group" keys={tweet}>
+        <span className="input-group-addon"><input type="checkbox" /></span>
+        <textarea className="form-control" rows="4">{tweet.text}</textarea>
       </div>
     ));
+    return (
+      <div>{elems}</div>
+    );
   }
 }
 
 class Page extends React.Component {
   constructor(props) {
     super(props);
-    this.state.twitterService = null;
-    this.state.myTweets = [];
+    this.state = {
+      twitterService: null,
+      myTweets: []
+    };
   }
-  handlePush(twitterService) {
+  handlePush() {
     let twitterService = new TwitterService();
     twitterService.getMyTweetsInToday().then((tweets) => {
       this.setState({
-        twitterService: twitterService,
+        twitterService,
         myTweets: tweets
       });
     });
   }
   render() {
     return (
-      <div class="container">
+      <div className="container">
         <ButtonToAuth onPushed={this.handlePush.bind(this)} />
         <TweetList myTweets={this.state.myTweets} />
       </div>
