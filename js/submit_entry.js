@@ -41,7 +41,9 @@ function submit(){
 	alert.
         hatena_xml = $.parseXML(xml);
         $.ajax({
-          url: "http://example.com/",
+          type: 'post',
+          data: hatena_xml,
+          url: "https://blog.hatena.ne.jp/" + localStorage.htn_username + "/" + localStorage.htn_blogdomain + "/atom/entry",
           success: function(data){
             location.href="./posted.html";
           },

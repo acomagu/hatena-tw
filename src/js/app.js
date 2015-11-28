@@ -77,17 +77,56 @@ class TwitterService {
 class ButtonToAuth extends React.Component {
   constructor(props) {
     super(props);
-    this.twitterService = null;
   }
   handleClick() {
-    this.twitterService = new TwitterService();
-    this.twitterService.getMyTweetsInToday().then((tweets) => {
-      for(let tweet of tweets) console.log(tweet.text);
-    });
+    this.props.onPushed();
+    // this.props.onAuthed(new TwitterService());
+    // twitterService.getMyTweetsInToday().then((tweets) => {
+    //   for(let tweet of tweets) console.log(tweet.text);
+    // });
   }
   render() {
     return (
       <button onClick={this.handleClick.bind(this)}>OAuth</button>
+    );
+  }
+}
+
+class TweetList extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return this.props.myTweets.map((tweet) => (
+      <div class="input-group">
+        <span class="input-group-addon"><input type="checkbox"></span>
+        <textarea class="form-control" rows="4">{tweet.text}</textarea>
+      </div>
+    ));
+  }
+}
+
+class Page extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state.twitterService = null;
+    this.state.myTweets = [];
+  }
+  handlePush(twitterService) {
+    let twitterService = new TwitterService();
+    twitterService.getMyTweetsInToday().then((tweets) => {
+      this.setState({
+        twitterService: twitterService,
+        myTweets: tweets
+      });
+    });
+  }
+  render() {
+    return (
+      <div class="container">
+        <ButtonToAuth onPushed={this.handlePush.bind(this)} />
+        <TweetList myTweets={this.state.myTweets} />
+      </div>
     );
   }
 }
@@ -102,8 +141,8 @@ let documentReadyPromise = new Promise((resolve, reject) => {
 documentReadyPromise.then(() => {
   ReactDOM.render(
     (
-      <ButtonToAuth />
+      <Page />
     ),
-    document.querySelector('.page-container')
+    document.querySelector('.react-root')
   );
 });
